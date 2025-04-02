@@ -1,0 +1,114 @@
+#+title: tf2-nix
+#+author: Madeleine Sydney Ślaga
+
+tf2-nix provides a framework for configuring [[https://en.wikipedia.org/wiki/Team_Fortress_2][Team Fortress 2]] (TF2), a game that not only allows for, but sometimes demands, a surprising amount of hacking to optimise your experience. User customisations includes anything from essential performance tweaks, to aesthetic changes such as UI overhauls, hit-sounds, and animations, to basic scripting.
+
+For the practical purposes including easy deployment and version-tracking, as well as "the spiritual purity of configuring computers correctly,"[fn:1] tf2-nix was created. This project's goal is to provide complete configuration, package-management, and, when possible, packages themselves, for TF2.
+
+* Disclaimers
+
+** This is an alpha status project
+
+At the moment, this project should mostly be considered a proof of concept. It is usable, I am using it, but it is pretty bare-bones. I hope to gradually expand this project anon. More packages, modules, all the Nix goodness we're accustomed to.
+
+Further, I'm not the most experienced Nix user. Expect bad code and unidiomatic interfaces. I encourage you to point out said bad code if you spot it. }:)
+
+** TF2 is a radioactive zigzagging target
+
+In my experience, TF2 and Valve software in general [[https://github.com/DeerUwU/deerhud-tf2/pull/15][react]] [[https://github.com/flathub/com.valvesoftware.Steam/issues/1218][very]] [[https://github.com/nix-community/impermanence/issues/165#issuecomment-2529954063][dramatically]][fn:2][fn:3] when prodded with even slightly unorthodox setups. Brace yourself before updating TF2, and never be afraid to open an issue here.
+
+* Usage
+
+** TL;DR
+
+*** As a flake
+
+Bring in the input, and build your TF2 config as a package:
+
+#+begin_src nix
+  {
+    inputs = {
+      tf2-nix.url = "path:///home/crumb/src/tf2-nix";
+    };
+
+    outputs = { self, ... }@inputs:
+      let
+        system = "x86_64-linux";
+        pkgs = import inputs.nixpkgs { inherit system; };
+        tf2pkgs = inputs.tf2-nix.packages.${system};
+        my-tf2-config = tf2pkgs.mergeTf2Configs (with tf2pkgs; [
+          # Your chosen packages.
+          mastercomfig.presets.medium-low
+          mastercomfig.addons.flat-mouse
+          mastercomfig.addons.no-tutorial
+          mastercomfig.addons.null-canceling-movement
+          improved-crosshairs
+          loadouts-script
+          # If you have a directory with the following structure, you can import
+          # it here to merge it into your config.
+          #     my-existing-config
+          #     ├── cfg
+          #     │   └── ...
+          #     ├── custom
+          #     │   └── ...
+          #     └── maps
+          #         └── ...
+          ./my-existing-config
+        ]);
+      in {
+        # ...
+      };
+  }
+#+end_src
+
+The tricky part is installing this package. If you use home-manager and *are not an Impermanence user*, you can install it using ~home.file~:
+
+#+begin_src nix
+  ### home.nix
+  let
+    # Make sure this is actually where your tf dir lives!
+    tf-dir = ".local/share/Steam/steamapps/common/Team Fortress 2/tf";
+  in {
+    home.file.${tf-dir} = {
+      source = my-tf2-config;
+      recursive = true;
+    };
+  }
+#+end_src
+
+Rebuild your system, and rejoice!
+
+** Library
+
+TODO!
+
+** Packages
+
+TODO!
+
+* Contributing
+
+Don't hesitate to open issues not only for "real issues" (bugs, missing features) but for poor UX, bad code, or anything else.
+
+* To-do list
+
+- [ ] Generate a package set from [[https://github.com/mastercomfig/hud-db][hud-db]].
+- [ ] Mastercomfig comfig.app wrapper.
+- [ ] VPK builder.
+- [ ] Configure launch options (Is this feasible?).
+- [ ] A higher-level NixOS/Home-manager module.
+- [ ] Tests.
+- [ ] Figure out installation for Impermanence users.
+
+* See also
+
+- [[https://github.com/spiretf/nix][gh:spiretf/nix, a set of tf2-related nix packages]]
+
+* Footnotes
+
+[fn:3] [[file:assets/bind-mount.png]]
+
+[fn:2] [[file:assets/gamescope.png]]
+
+[fn:1] [[file:assets/spiritual-purity.webp]]
+
