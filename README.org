@@ -17,7 +17,19 @@ Further, I'm not the most experienced Nix user. Expect bad code and unidiomatic 
 
 In my experience, TF2 and Valve software in general [[https://github.com/DeerUwU/deerhud-tf2/pull/15][react]] [[https://github.com/flathub/com.valvesoftware.Steam/issues/1218][very]] [[https://github.com/nix-community/impermanence/issues/165#issuecomment-2529954063][dramatically]][fn:2][fn:3] when prodded with even slightly unorthodox setups. Brace yourself before updating TF2, and never be afraid to open an issue here.
 
+* FAQ (Frequently-anticipated questions)
+
+** How make [[https://github.com/nix-community/impermanence][Impermanence]] work?
+
+See [[https://github.com/nix-community/impermanence/issues/165#issuecomment-2537723929][nix-community/impermanence#165]]:
+
+- If =~/.local/share/Steam= is persisted using a symlink, Steam works, but ~home.file~ breaks.
+- If =~/.local/share/Steam= is persisted using a bind-mount via Impermanence's Home-manager module, Steam breaks, but ~home.file~ works.
+- If =~/.local/share/Steam= is persisted using a bind-mount *via Impermanence's NixOS module*, Steam works, and ~home.file~ works!
+
 * Usage
+
+tf2-nix is dead simple. No modules of any variety are provided (at this point in time). A TF2 'config' is packaged into a derivation resembling TF2's =tf= directory, and several config derivations are merged to create your final configuration. It is then left to you, the user, to install it as you wish. Most often, ~home.file.${path-to-tf-dir} = {source = your-config; recursive = true;}~ will suffice.
 
 ** TL;DR
 
@@ -61,12 +73,12 @@ Bring in the input, and build your TF2 config as a package:
   }
 #+end_src
 
-The tricky part is installing this package. If you use home-manager and *are not an Impermanence user*, you can install it using ~home.file~:
+You can then install your configuration into TF2's =tf= directory:
 
 #+begin_src nix
   ### home.nix
   let
-    # Make sure this is actually where your tf dir lives!
+    # Confirm that this is actually where your tf dir lives!
     tf-dir = ".local/share/Steam/steamapps/common/Team Fortress 2/tf";
   in {
     home.file.${tf-dir} = {
@@ -88,7 +100,7 @@ TODO!
 
 * Contributing
 
-Don't hesitate to open issues not only for "real issues" (bugs, missing features) but for poor UX, bad code, or anything else.
+Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing features) but for poor UX, bad code, or anything else.
 
 * To-do list
 
@@ -98,7 +110,7 @@ Don't hesitate to open issues not only for "real issues" (bugs, missing features
 - [ ] Configure launch options (Is this feasible?).
 - [ ] A higher-level NixOS/Home-manager module.
 - [ ] Tests.
-- [ ] Figure out installation for Impermanence users.
+- [X] Figure out installation for Impermanence users.
 
 * See also
 
