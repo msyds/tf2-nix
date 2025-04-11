@@ -27,9 +27,13 @@ See [[https://github.com/nix-community/impermanence/issues/165#issuecomment-2537
 - If =~/.local/share/Steam= is persisted using a bind-mount via Impermanence's Home-manager module, Steam breaks, but ~home.file~ works.
 - If =~/.local/share/Steam= is persisted using a bind-mount *via Impermanence's NixOS module*, Steam works, and ~home.file~ works!
 
+For the purists and the masochists, I recommend a despicable game file-system ping-pong:
+
+[[file:assets/file-system-ping-pong.png]]
+
 * Usage
 
-tf2-nix is dead simple. No modules of any variety are provided (at this point in time). A TF2 'config' is packaged into a derivation resembling TF2's =tf= directory, and several config derivations are merged to create your final configuration. It is then left to you, the user, to install it as you wish. Most often, ~home.file.${path-to-tf-dir} = {source = your-config; recursive = true;}~ will suffice.
+tf2-nix is dead simple. No modules of any variety are provided (at this point in time). A TF2 'config' is packaged into a derivation resembling TF2's =tf= directory. Your final config is composed of several configs; your HUD, your scripts, your maps, your hitsounds, etc. are individually packaged as 'configs,' which are ultimately merged into one[fn:4]. It is then left to you, the user, to install it as you wish. I expect ~home.file.${path-to-tf-dir} = {source = your-config; recursive = true;}~ to suffice for most people.
 
 ** TL;DR
 
@@ -56,6 +60,8 @@ Bring in the input, and build your TF2 config as a package:
           mastercomfig.addons.null-canceling-movement
           improved-crosshairs
           loadouts-script
+          huds.broesel-hud
+          maps.jump_beef
           # If you have a directory with the following structure, you can import
           # it here to merge it into your config.
           #     my-existing-config
@@ -96,11 +102,11 @@ TODO!
 
 ** Packages
 
-TODO!
+Documentation is a WIP }:P. For now, you can explore the flake outputs using ~nix repl~.
 
 *** HUDs
 
-A package set of HUDs is generated primarily using data from [[https://github.com/mastercomfig/hud-db][hud-db]], with a handful of manual additions and overrides. These HUDs are provided
+A package set of HUDs is generated primarily using data from [[https://github.com/mastercomfig/hud-db][hud-db]], complemented with a handful of manual additions and overrides.
 
 * Contributing
 
@@ -117,12 +123,16 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 - [ ] A higher-level NixOS/Home-manager module.
 - [ ] Tests.
 - [X] Figure out installation for Impermanence users.
+- [ ] Package Paysus' animation overhauls.
+- [ ] Generate package set from [[https://cdn.jumpacademy.tf/][jumpacademy.tf]].
 
 * See also
 
 - [[https://github.com/spiretf/nix][gh:spiretf/nix, a set of tf2-related nix packages]]
 
 * Footnotes
+
+[fn:4] Forming a commutative [[https://en.wikipedia.org/wiki/Monoid][monoid]] }:). I know you were wondering.
 
 [fn:3] [[file:assets/bind-mount.png]]
 
