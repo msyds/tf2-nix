@@ -98,14 +98,20 @@ TODO!
 
 TODO!
 
+*** HUDs
+
+A package set of HUDs is generated primarily using data from [[https://github.com/mastercomfig/hud-db][hud-db]], with a handful of manual additions and overrides. These HUDs are provided
+
 * Contributing
 
 Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing features) but for poor UX, bad code, or anything else.
 
 * To-do list
 
-- [ ] Generate a package set from [[https://github.com/mastercomfig/hud-db][hud-db]].
-- [ ] Mastercomfig comfig.app wrapper.
+- [X] Generate a package set from [[https://github.com/mastercomfig/hud-db][hud-db]].
+- [ ] Support non-GitHub HUDs from [[https://github.com/mastercomfig/hud-db][hud-db]].
+- [ ] CI action to update hud-db.
+- [ ] Mastercomfig [[https://comfig.app/][comfig.app]] wrapper.
 - [ ] VPK builder.
 - [ ] Configure launch options (Is this feasible?).
 - [ ] A higher-level NixOS/Home-manager module.

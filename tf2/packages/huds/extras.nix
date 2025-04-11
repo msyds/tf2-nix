@@ -1,4 +1,4 @@
-{ fetchFromGitHub, mkTf2Config, ... }:
+{ fetchFromGitHub, mkTf2Config }:
 
 {
   deerhud = mkTf2Config {

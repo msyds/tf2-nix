@@ -31,12 +31,14 @@ let
     };
 
   extra-args = {
-    inherit mkTf2Config fetchFromGameBanana mkCfg mergeTf2Configs;
+    inherit mkTf2Config fetchFromGameBanana mkCfg mergeTf2Configs callPackage;
   };
+
+  callPackage = lib.callPackageWith (pkgs // extra-args);
 in lib.mergeAttrsList [ 
-  extra-args
-  { mastercomfig = pkgs.callPackage ./mastercomfig.nix extra-args; }
-  (pkgs.callPackage ./huds.nix extra-args)
-  (pkgs.callPackage ./misc.nix extra-args)
-  (pkgs.callPackage ./scripts.nix extra-args)
+  { inherit mkTf2Config fetchFromGameBanana mkCfg mergeTf2Configs; }
+  { mastercomfig = callPackage ./mastercomfig.nix {}; }
+  { huds = callPackage ./huds {}; }
+  (callPackage ./misc.nix {})
+  (callPackage ./scripts.nix {})
 ]
