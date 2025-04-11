@@ -6,11 +6,12 @@ let
   fetchFromGameBanana =
     { id
     , hash
+    , name ? null
     }:
     pkgs.fetchzip {
       url = "https://gamebanana.com/dl/${id}";
       extension = "zip";
-      inherit hash;
+      inherit hash name;
     };
 
   mkCfg = name: body:
@@ -39,6 +40,7 @@ in lib.mergeAttrsList [
   { inherit mkTf2Config fetchFromGameBanana mkCfg mergeTf2Configs; }
   { mastercomfig = callPackage ./mastercomfig.nix {}; }
   { huds = callPackage ./huds {}; }
+  { maps = callPackage ./maps.nix {}; }
   (callPackage ./misc.nix {})
   (callPackage ./scripts.nix {})
 ]
