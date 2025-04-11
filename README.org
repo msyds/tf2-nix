@@ -138,5 +138,5 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 
 [fn:2] [[file:assets/gamescope.png]]
 
-[fn:1] [[file:assets/spiritual-purity.webp]]
+[fn:1] [[file:assets/spiritual-purity.png]]
 
