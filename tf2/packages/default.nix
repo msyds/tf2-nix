@@ -40,7 +40,7 @@ in lib.mergeAttrsList [
   { inherit mkTf2Config fetchFromGameBanana mkCfg mergeTf2Configs; }
   { mastercomfig = callPackage ./mastercomfig.nix {}; }
   { huds = callPackage ./huds {}; }
-  { maps = callPackage ./maps.nix {}; }
+  { maps = callPackage ./maps {}; }
   (callPackage ./misc.nix {})
   (callPackage ./scripts.nix {})
 ]

@@ -134,7 +134,7 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 - [ ] Tests.
 - [X] Figure out installation for Impermanence users.
 - [ ] Package Paysus' animation overhauls.
-- [ ] Generate package set from [[https://cdn.jumpacademy.tf/][jumpacademy.tf]].
+- [X] Generate package set from [[https://cdn.jumpacademy.tf/][jumpacademy.tf]].
 
 * See also
 

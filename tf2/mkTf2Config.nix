@@ -1,7 +1,7 @@
 { stdenv, lib }:
 
 { pname
-, version ? "nover"
+, version ? ""
 , custom ? []
 , cfg ? []
 , maps ? []
@@ -19,9 +19,9 @@ let
       ${lib.toShellVar "outputList_${output}" var}
       for i in "''${outputList_${output}[@]}"; do
         name="$(stripHash "$i")"
-        vpkDir="#vpk-''${name}#" 
-        if [ -d "$vpkDir" ]; then
-          mv "$vpkDir/$name" "$out/${output}/$name"
+        wrapperDir="#''${name}#" 
+        if [ -d "$wrapperDir" ]; then
+          mv "$wrapperDir"/* "$out/${output}/"
         else
           mv "$name" "$out/${output}/$name"
         fi
@@ -38,21 +38,38 @@ in stdenv.mkDerivation ({
   inherit pname version;
   # Adapted from stdenv's _defaultUnpack().
   unpackCmd = ''
-    if [ "''${curSrc##*.}" = "vpk" ]; then
-      destination="#vpk-$(stripHash "$curSrc")#/$(stripHash "$curSrc")"
-      mkdir "$(dirname "$destination")"
-      if [ -e "$destination" ]; then
-          echo "Cannot copy $curSrc to $destination: destination already exists!"
-          echo "Did you specify two \"srcs\" with the same \"name\"?"
-          return 1
-      fi
-      # We can't preserve hardlinks because they may have been
-      # introduced by store optimization, which might break things
-      # in the build.
-      cp -r --preserve=mode,timestamps --reflink=auto -- "$curSrc" "$destination"
-    else
-      return 1
-    fi
+    echo "hello i am unpackcmdjkj"
+    set -e
+    case "$curSrc" in
+      *.vpk)
+        name="$(stripHash "$curSrc")"
+        destination="#$name#/$name"
+        mkdir "$(dirname "$destination")"
+        if [ -e "$destination" ]; then
+            echo "Cannot copy $curSrc to $destination: destination already exists!"
+            echo "Did you specify two \"srcs\" with the same \"name\"?"
+            return 1
+        fi
+        # We can't preserve hardlinks because they may have been
+        # introduced by store optimization, which might break things
+        # in the build.
+        cp -r --preserve=mode,timestamps --reflink=auto -- "$curSrc" "$destination"
+        ;;
+      *.bsp.bz2)
+        bzfile="$(stripHash "$curSrc")"
+        file="''${bzfile%.bz2}"
+        destination="#$bzfile#/$file"
+        mkdir "$(dirname "$destination")"
+        bunzip2 -c "$curSrc" > "$destination"
+        ;;
+      *)
+        return 1
+        ;;
+    esac
+  '';
+  preUnpack = ''
+    echo "$unpackCmd"
+    echo "$unpackCmdHooks"
   '';
   installPhase = ''
     set -xe
