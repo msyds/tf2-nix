@@ -6,7 +6,7 @@ let
   fetchFromGameBanana =
     { id
     , hash
-    , name ? null
+    , name ? "source"
     }:
     pkgs.fetchzip {
       url = "https://gamebanana.com/dl/${id}";
