@@ -1,0 +1,49 @@
+diff --git a/resource/ui/hudmediccharge.res b/resource/ui/hudmediccharge.res
+index afbf45a..5b0cd3c 100644
+--- a/resource/ui/hudmediccharge.res
++++ b/resource/ui/hudmediccharge.res
+@@ -5,7 +5,7 @@
+ 		"ControlName"	"ImagePanel"
+ 		"fieldName"		"MeterBrackets"
+ 		"xpos"			"cs-0.5"
+-		"ypos"			"47"
++		"ypos"			"3"
+ 		"zpos"			"-5"
+ 		"wide"			"156"
+ 		"tall"			"20"
+@@ -21,7 +21,7 @@
+ 		"ControlName"	"CExLabel"
+ 		"fieldName"		"ChargeLabel"
+ 		"xpos"			"cs-0.5"
+-		"ypos"			"50"
++		"ypos"			"6"
+ 		"zpos"			"3"
+ 		"wide"			"90"
+ 		"tall"			"15"
+@@ -65,7 +65,7 @@
+ 		"ControlName"	"CExLabel"
+ 		"fieldName"		"IndividualChargesLabel"
+ 		"xpos"			"c92"
+-		"ypos"			"44"
++		"ypos"			"0"
+ 		"zpos"			"2"
+ 		"wide"			"90"
+ 		"tall"			"30"
+@@ -87,7 +87,7 @@
+ 		"fieldName"		"ChargeMeter"
+ 		"font"			"Default"
+ 		"xpos"			"cs-0.5"
+-		"ypos"			"50"
++		"ypos"			"6"
+ 		"zpos"			"2"
+ 		"wide"			"150"
+ 		"tall"			"14"				
+@@ -107,7 +107,7 @@
+ 		"fieldName"		"ChargeMeter1"
+ 		"font"			"Default"
+ 		"xpos"			"c-75"
+-		"ypos"			"52"
++		"ypos"			"8"
+ 		"zpos"			"2"
+ 		"wide"			"36"
+ 		"tall"			"10"				

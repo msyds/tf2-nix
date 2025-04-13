@@ -96,6 +96,16 @@ You can then install your configuration into TF2's =tf= directory:
 
 Rebuild your system, and rejoice!
 
+** Example Flake
+
+Try out the example flake:
+
+#+begin_example
+$ nix build 'gitlab:msyds/tf2-nix?dir=example'
+#+end_example
+
+The resulting config can then be explored in =./result/=.
+
 ** Library
 
 TODO!
