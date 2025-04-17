@@ -41,6 +41,8 @@ in lib.mergeAttrsList [
   { mastercomfig = callPackage ./mastercomfig.nix {}; }
   { huds = callPackage ./huds {}; }
   { maps = callPackage ./maps {}; }
-  (callPackage ./misc.nix {})
+  (builtins.mapAttrs
+    (_: v: callPackage v {})
+    (import ./misc {inherit lib;}))
   (callPackage ./scripts.nix {})
 ]
