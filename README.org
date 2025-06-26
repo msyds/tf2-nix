@@ -130,6 +130,7 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 - [ ] Mastercomfig [[https://comfig.app/][comfig.app]] wrapper.
 - [ ] VPK builder.
 - [X] Configure launch options (Is this feasible?).
+  + See [[https://github.com/different-name/steam-launch.nix][steam-launch.nix]]
 - [ ] A higher-level NixOS/Home-manager module.
 - [ ] Tests.
 - [X] Figure out installation for Impermanence users.
@@ -139,7 +140,7 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 * See also
 
 - [[https://github.com/spiretf/nix][gh:spiretf/nix]], a set of tf2-related nix packages
-- [[https://github.com/different-name/steam-launch.nix][steam-launch.nix]], a Home-manager module for setting launch options for Steam games (such as Team Fortress 2!)
+-  [[https://github.com/different-name/steam-launch.nix][steam-launch.nix]], a Home-manager module for setting launch options for Steam games (such as Team Fortress 2!)
 
 * Footnotes
 
