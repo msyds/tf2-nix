@@ -129,7 +129,7 @@ Don't hesitate to open issues/PRs not only for "real issues" (bugs, missing feat
 - [ ] CI action to update hud-db.
 - [ ] Mastercomfig [[https://comfig.app/][comfig.app]] wrapper.
 - [ ] VPK builder.
-- [ ] Configure launch options (Is this feasible?).
+- [X] Configure launch options (Is this feasible?).
 - [ ] A higher-level NixOS/Home-manager module.
 - [ ] Tests.
 - [X] Figure out installation for Impermanence users.
