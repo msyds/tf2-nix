@@ -5,7 +5,7 @@
     pname = "deerhud";
     custom = [
       (fetchFromGitHub {
-        name = "deerhud";
+        name = "deerhud-src";
         owner = "DeerUwU";
         repo = "deerhud-tf2";
         rev = "78a24effbc66bc78b4bb557228eaa0195db3270c";

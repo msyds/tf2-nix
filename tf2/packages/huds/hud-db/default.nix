@@ -6,7 +6,7 @@ builtins.mapAttrs
     env.description = e.description;
     custom = [
       (fetchFromGitHub (builtins.removeAttrs e.src ["__type"] // {
-        inherit name;
+        name = "${name}-src";
       }))
     ];
   })
