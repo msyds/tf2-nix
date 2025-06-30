@@ -7,13 +7,17 @@
   };
 
   outputs = { self, ... }@inputs:
+    let
+      # keep it as an attrset arg for future expandability
+      mkTf2Pkgs = { pkgs }: import ./tf2/packages { inherit pkgs; };
+    in
     inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import inputs.nixpkgs { inherit system; };
-        lib = pkgs.lib;
       in {
-        legacyPackages = import ./tf2/packages {
-          inherit pkgs lib;
-        };
-      });
+        legacyPackages = mkTf2Pkgs pkgs;
+      })
+    // {
+      lib = { inherit mkTf2Pkgs; };
+    };
 }

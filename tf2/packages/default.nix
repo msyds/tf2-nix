@@ -1,6 +1,8 @@
-{ pkgs, lib }:
+{ pkgs }:
 
 let
+  inherit (pkgs) lib;
+
   mkTf2Config = pkgs.callPackage ../mkTf2Config.nix {};
 
   fetchFromGameBanana =
