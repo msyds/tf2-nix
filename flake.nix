@@ -14,8 +14,23 @@
     inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import inputs.nixpkgs { inherit system; };
+        inherit (pkgs) lib;
+        tf2Pkgs = mkTf2Pkgs { inherit pkgs; };
       in {
-        legacyPackages = mkTf2Pkgs pkgs;
+        legacyPackages = tf2Pkgs;
+        packages = lib.mergeAttrsList (lib.flip map [
+          []
+          [ "huds" ]
+          [ "maps" ]
+          [ "mastercomfig" "addons" ]
+          [ "mastercomfig" "presets" ]
+        ] (attrPath:
+          lib.pipe tf2Pkgs [
+            (lib.getAttrFromPath attrPath)
+            (lib.filterAttrs (_: v: lib.isDerivation v))
+            (lib.mapAttrs' (k: v: lib.nameValuePair (lib.concatStringsSep "_" (attrPath ++ [k])) v))
+          ]
+        ));
       })
     // {
       lib = { inherit mkTf2Pkgs; };
