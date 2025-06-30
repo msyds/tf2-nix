@@ -1,7 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    tf2-nix.url = "path:///home/crumb/src/tf2-nix";
+    tf2-nix = {
+      url = "gitlab:msyds/tf2-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... }@inputs: {

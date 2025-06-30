@@ -44,7 +44,7 @@ Bring in the input, and build your TF2 config as a package:
 #+begin_src nix
   {
     inputs = {
-      tf2-nix.url = "path:///home/crumb/src/tf2-nix";
+      tf2-nix.url = "gitlab:msyds/tf2-nix";
     };
 
     outputs = { self, ... }@inputs:
