@@ -12,7 +12,7 @@
         pkgs = import inputs.nixpkgs { inherit system; };
         lib = pkgs.lib;
       in {
-        packages = import ./tf2/packages {
+        legacyPackages = import ./tf2/packages {
           inherit pkgs lib;
         };
       });
