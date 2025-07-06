@@ -5,6 +5,8 @@
             [clojure.tools.logging :as l]
             [clojure.string :as str]))
 
+;; https://github.com/mastercomfig/hud-db is expected to be cloned to
+;; `hud-db-root`.
 (def hud-db-root (or (System/getenv "HUD_DB_ROOT")
                      (fs/expand-home "~/git/hud-db")))
 

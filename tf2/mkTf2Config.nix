@@ -5,25 +5,29 @@
 , custom ? []
 , cfg ? []
 , maps ? []
-# Extra arguments to pass to stdenv.mkDerivation.
+# Extra arguments to pass to stdenv.mkDerivation.  Exists for
+# backward-compatibility.
 , env ? {}
+, ...
 }@args:
 
 let
   version-suffix = lib.optionalString (version != null) "-${version}";
   name = pname + version-suffix;
 
+  # Creates and populates an output under $out/${output}.  The parameter
+  # `output` is a TF2 config output, i.e. "cfg", "custom", or "maps".
   make-output = output: var:
     lib.optionalString (var != []) ''
       mkdir -p "$out/${output}"
       ${lib.toShellVar "outputList_${output}" var}
       for i in "''${outputList_${output}[@]}"; do
-        name="$(stripHash "$i")"
-        wrapperDir="#''${name}#" 
+        piece="$(stripHash "$i")"
+        wrapperDir="#''${piece}#" 
         if [ -d "$wrapperDir" ]; then
           mv "$wrapperDir"/* "$out/${output}/"
         else
-          mv "$name" "$out/${output}/$name"
+          mv "$piece" "$out/${output}/$piece"
         fi
       done
     '';
@@ -34,12 +38,19 @@ let
     if builtins.length allSrcs == 1
     then { src = builtins.head allSrcs; }
     else { srcs = allSrcs; sourceRoot = "."; };
+
+  # Arguments unused by mkTf2Config fall through to mkDerivation.
+  fallthroughArgs = lib.removeAttrs args [
+    "custom"
+    "cfg"
+    "maps"
+    "env"
+  ];
 in stdenv.mkDerivation ({
   inherit name;
   inherit pname version;
   # Adapted from stdenv's _defaultUnpack().
   unpackCmd = ''
-    echo "hello i am unpackcmdjkj"
     set -e
     case "$curSrc" in
       *.vpk)
@@ -82,4 +93,4 @@ in stdenv.mkDerivation ({
     ${make-output "custom" custom}
     ${make-output "maps" maps}
   '';
-} // srcArg // env)
+} // srcArg // fallthroughArgs // env)
