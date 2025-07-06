@@ -12,8 +12,8 @@
     packages.x86_64-linux.default =
       let
         pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-        tf2pkgs = inputs.tf2-nix.packages.x86_64-linux;
-      in tf2pkgs.mergeTf2Configs (with tf2pkgs; [
+        tf2Pkgs = inputs.tf2-nix.lib.mkTf2Pkgs { inherit pkgs; };
+      in tf2Pkgs.mergeTf2Configs (with tf2Pkgs; [
         mastercomfig.presets.medium-low
         mastercomfig.addons.flat-mouse
         mastercomfig.addons.no-tutorial

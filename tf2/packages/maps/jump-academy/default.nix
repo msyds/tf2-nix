@@ -6,6 +6,7 @@ builtins.mapAttrs
     env.description = e.description;
     maps = [
       (fetchurl {
+        name = "${name}-src";
         inherit (e.src) url hash;
       })
     ];
