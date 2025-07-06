@@ -112,11 +112,19 @@ TODO!
 
 ** Packages
 
-Documentation is a WIP }:P. For now, you can explore the flake outputs using ~nix repl~.
+The package set is best explored via ~nix repl~ and ~nix flake show~. Some notable subsets are listed here:
 
 *** HUDs
 
 A package set of HUDs is generated primarily using data from [[https://github.com/mastercomfig/hud-db][hud-db]], complemented with a handful of manual additions and overrides.
+
+*** Maps
+
+The map list currently consists of primarily rocket jumping courses, per [[https://jumpacademy.tf/fastdl][JumpAcademy.tf]].
+
+*** Mastercomfig
+
+[[https://comfig.app/][Mastercomfig]] presets and addons are packaged from their [[https://github.com/mastercomfig/mastercomfig/releases][GitHub releases]].
 
 * Contributing
 
