@@ -5,7 +5,7 @@ builtins.mapAttrs
     pname = name;
     custom = [
       (fetchFromGitHub (builtins.removeAttrs e.src ["__type"] // {
-        name = "${name}-src";
+        inherit name;
       }))
     ];
     meta = {
