@@ -1,7 +1,7 @@
 { stdenv, lib }:
 
 { pname
-, version ? ""
+, version ? null
 , custom ? []
 , cfg ? []
 , maps ? []
@@ -47,6 +47,7 @@ let
     "env"
   ];
 in stdenv.mkDerivation ({
+  inherit name;
   inherit pname version;
   # Adapted from stdenv's _defaultUnpack().
   unpackCmd = ''
